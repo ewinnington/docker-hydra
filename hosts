@@ -1,0 +1,2 @@
+# Adding hosts to the local DNS for access
+127.0.0.1 dev.local 

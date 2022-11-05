@@ -1,0 +1,60 @@
+version: '3.8'
+services:
+  ngweb: 
+    image: nginx:latest
+    ports: 
+      - "8080:80"
+    volumes:
+      - .\nginx-php\code:/code
+      - .\nginx-php\site.conf:/etc/nginx/conf.d/site.conf
+    depends_on:
+      - "php"
+    networks: 
+      - common_net
+
+  php:
+    image: php:7-fpm
+    volumes: 
+      - .\nginx-php\code:/code
+    networks: 
+      - common_net
+      - backends_net
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: 'rabbitmq'
+    ports:
+        - 5672:5672
+        - 15672:15672
+    volumes:
+        - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+        - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+    networks: 
+      - backends_net
+
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    networks:
+      - backends_net
+
+  pgdb: 
+    image: postgres:latest
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - '5432:5432'
+    volumes: 
+      ## - .\db:/var/lib/postgresql/data #Uncomment to write DB outside of docker
+      - ./db-scripts/init.sql:/docker-entrypoint-initdb.d/create_tables.sql
+    networks: 
+      - backends_net
+
+networks:
+  common_net:
+    driver: bridge
+  backends_net:
+    driver: bridge
