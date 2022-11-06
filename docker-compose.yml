@@ -13,7 +13,7 @@ services:
       - common_net
 
   php:
-    image: php:7-fpm
+    image: php_with_rabbit:latest ##php:7-fpm
     volumes: 
       - .\nginx-php\code:/code
     networks: 

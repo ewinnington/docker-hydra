@@ -17,9 +17,11 @@ run ```build.bat``` to build the services docker images
 
 run ```docker compose up```
 
-browse to http://dev.local:8080
+browse to http://dev.local:8080 and http://dev.local:8080/send.php to send a message to RabbitMQ
 
 ## Nginx with local PHP
+
+While it was easy to setup Nginx+PHP using the docker compose images only, I had to change and make a custom php docker image to install the php-amqplib lib necessary to interact with rabbit. It also required the installation of the bcmath module, which is done with ```docker-php-ext-install bcmath``` inside the docker file. 
 
 ## Rabbitmq
 
