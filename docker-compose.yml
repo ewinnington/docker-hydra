@@ -39,6 +39,13 @@ services:
     networks:
       - backends_net
 
+  receiver-writer:
+    image: dotnet_receiver:latest
+    networks:
+      - backends_net
+    links: 
+      - "pgdb:database"
+
   pgdb: 
     image: postgres:latest
     restart: always

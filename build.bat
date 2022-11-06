@@ -1,0 +1,1 @@
+docker build .\receiver-writer\. -t "dotnet_receiver"
