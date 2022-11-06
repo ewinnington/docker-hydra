@@ -3,7 +3,8 @@
 
 <?php
 
-require_once __DIR__ . '/vendor/autoload.php';
+// had to modify the path to get to the location installed by composer
+require_once __DIR__ . '/../var/www/html/vendor/autoload.php'; 
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
 
